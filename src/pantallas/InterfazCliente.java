@@ -4,22 +4,28 @@
  */
 package pantallas;
 
+import java.util.ArrayList;
+import java.util.List;
 import logica.Cliente;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class InterfazCliente extends javax.swing.JFrame {
 
-    Cliente clientes[] = new Cliente[100];
+    List<Cliente> clientes = new ArrayList();
+    // Es el modelo que tendra la tabla
     DefaultTableModel modeloTabla = new DefaultTableModel();
     int i = 0;
 
     private void listar() {
-        // Reinicia las filas que fueron insertadas
+        // Reinicia las filas
         modeloTabla.setRowCount(0);
+        // Crea un objeto con el numero de columnas que esten iniciadas
         Object[] datos = new Object[tablita.getColumnCount()];
 
+        // En este for mete los datos traidos del Arreglo clientes
         for (Cliente cliente : clientes) {
+            // En el caso de que el arreglo exista el producto se inserta en el Object datos
             if (cliente != null) {
                 datos[0] = cliente.getCedula();
                 datos[1] = cliente.getNombre();
@@ -28,20 +34,17 @@ public class InterfazCliente extends javax.swing.JFrame {
                 modeloTabla.addRow(datos);
             }
         }
+        // Actualiza la tabla
         tablita.setModel(modeloTabla);
     }
 
     private void setModelo() {
-
+        // Metemos los valores que queremos que aparezca en la tabla
         String[] cabeceraTabla = {"Cedula", "Nombre", "Telefono", "Direccion"};
+        // Actualizamos la cabecera
         modeloTabla.setColumnIdentifiers(cabeceraTabla);
 
-        // Permite que la tabla no sea editable 
-        for (int c = 0; c < tablita.getColumnCount(); c++) {
-            Class<?> col_class = tablita.getColumnClass(c);
-            tablita.setDefaultEditor(col_class, null);
-        }
-
+        // Actualizamos la tabla
         tablita.setModel(modeloTabla);
 
     }
@@ -150,7 +153,7 @@ public class InterfazCliente extends javax.swing.JFrame {
             }
         });
 
-        direccion.setBorder(javax.swing.BorderFactory.createTitledBorder("Direccion"));
+        direccion.setBorder(javax.swing.BorderFactory.createTitledBorder("direccion"));
 
         jButton1.setText("Cancelar");
 
@@ -264,14 +267,17 @@ public class InterfazCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        clientes[i] = new Cliente(cedula.getText(), nombre.getText(), telefono.getText(), direccion.getText());
+        // Agrega el cliente al arreglo de clientes
+        clientes.add(new Cliente(cedula.getText(), nombre.getText(), telefono.getText(), direccion.getText()));
+
+        // Esta parte es para vaciar los JTextField
         cedula.setText("");
         nombre.setText("");
         telefono.setText("");
         direccion.setText("");
 
+        // Este metodo nos permite refrescar la tabla
         listar();
-        i++;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cedulaKeyReleased

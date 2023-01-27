@@ -12,38 +12,39 @@ import javax.swing.table.DefaultTableModel;
 
 public class InterfazProducto extends javax.swing.JFrame {
 
-   List<Producto> p = new ArrayList();
+    List<Producto> p = new ArrayList();
+    // Es el modelo que tendra la tabla
     DefaultTableModel modeloTabla = new DefaultTableModel();
     int i = 0;
 
     private void listar() {
-        // Reinicia las filas que fueron insertadas
+        // Reinicia las filas
         modeloTabla.setRowCount(0);
+        // Crea un objeto con el numero de columnas que esten iniciadas
         Object[] datos = new Object[tablita.getColumnCount()];
 
+        // En este for mete los datos traidos del Arreglo clientes
         for (Producto prod : p) {
+            // En el caso de que el arreglo exista el producto se inserta en el Object datos
             if (prod != null) {
                 datos[0] = prod.getNombre();
                 datos[1] = prod.getPrecio();
-                datos[2] =prod.getStock();
+                datos[2] = prod.getStock();
                 datos[3] = prod.getProveedor();
                 modeloTabla.addRow(datos);
             }
         }
+        // Actualiza la tabla
         tablita.setModel(modeloTabla);
     }
 
     private void setModelo() {
-
-        String[] cabeceraTabla = { "Nombre","Precio" ,"Stock", "Proveedor"};
+        // Metemos los valores que queremos que aparezca en la tabla
+        String[] cabeceraTabla = {"Nombre", "Precio", "Stock", "Proveedor"};
+        // Actualizamos la cabecera
         modeloTabla.setColumnIdentifiers(cabeceraTabla);
 
-        // Permite que la tabla no sea editable 
-        for (int c = 0; c < tablita.getColumnCount(); c++) {
-            Class<?> col_class = tablita.getColumnClass(c);
-            tablita.setDefaultEditor(col_class, null);
-        }
-
+        // Actualizamos la tabla
         tablita.setModel(modeloTabla);
 
     }
@@ -271,12 +272,15 @@ public class InterfazProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        p.add(new Producto(i,nombre.getText(),Double.parseDouble(precio.getText()) ,Integer.parseInt(stock.getText()), direccion.getText()));
+        // Agrega un  producto al arreglo de productos
+        p.add(new Producto(i, nombre.getText(), Double.parseDouble(precio.getText()), Integer.parseInt(stock.getText()), direccion.getText()));
+
+        // Esta parte es para vaciar los jTextField
         precio.setText("");
         nombre.setText("");
         stock.setText("");
         direccion.setText("");
-
+        // Este metodo nos permite refrescar la tabla
         listar();
         i++;
     }//GEN-LAST:event_jButton2ActionPerformed

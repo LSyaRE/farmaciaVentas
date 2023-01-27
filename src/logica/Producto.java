@@ -131,21 +131,25 @@ public class Producto {
         return mensaje;
     }
 
-    public String vender(int cantidad) {
-        String mensaje = "Existencias Insuficientes";
+    public boolean vender(int cantidad) {
+        boolean mensaje = false;
         if (this.stock >= cantidad) {
             // El -= es equivalente a decir; stock = stock - cantidad 
             this.stock -= cantidad;
             this.cantidadVendida += cantidad;
-            mensaje = "Venta Exitosa";
+            mensaje = true;
         }
         return mensaje;
     }
 
-    public double calcularTotal(int cantidad) {
-        if (cantidad > 10) return this.getPrecio()*1.05;
-        if (cantidad < 8) return this.getPrecio()*1.10;      
-        return this.getPrecio();
+    public double calcularTotalCompra(int cantidad) {
+        if (cantidad > 10) return (this.getPrecio()*cantidad)*1.05;
+        if (cantidad < 8) return (this.getPrecio()*cantidad)*1.10;      
+        return this.getPrecio()*cantidad;
+    }
+
+    public double calcularTotalVenta(int cantidad) {
+        return this.getPrecio()*cantidad;
     }
 
 }

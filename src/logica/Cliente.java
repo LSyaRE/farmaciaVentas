@@ -1,11 +1,8 @@
 package logica;
 
-/**
- *
- * @author
- */
 public class Cliente {
 
+    private int id;
     private String cedula;
     private String nombre;
     private String telefono;
